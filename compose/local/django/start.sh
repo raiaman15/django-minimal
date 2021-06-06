@@ -6,22 +6,24 @@ echo "FLUSHING DATABASE"
 python manage.py flush --no-input
 echo "DELETING EXISTING MIGRATION FILES"
 find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
-find . -path "*/migrations/*.pyc"  -delete
+find . -path "*/migrations/*.pyc" -delete
 # /Personal Preference to start fresh - You may comment
 
 echo "MAKING MIGRATION FILES"
-python manage.py makemigrations --noinput
+python manage.py makemigrations --settings=config.settings.local --noinput
 echo "MIGRATING DATABASE"
-python manage.py migrate --noinput
+python manage.py migrate --settings=config.settings.local --noinput
 echo "SEEDING DATABASE | REFRESH"
-# python manage.py some_seed
+python manage.py accounts_seed --settings=config.settings.local
+echo "RUNNING FLAKE8"
+flake8
 echo "RUNNING ALL TEST CASES"
-python manage.py test
+python manage.py test --settings=config.settings.local
 echo "CREATING TEST SUPERUSER"
-echo "from django.contrib.auth import get_user_model; user = get_user_model().objects.create_user(username='admin', email='admin@infroid.com', password='DevTeam@123'); user.is_superuser=True; user.is_staff=True; user.save()" | python manage.py shell
+echo "from django.contrib.auth import get_user_model; user = get_user_model().objects.create_user(username='9999999999', email='webmaster@bit-boomer.com', password='DevTeam@123'); user.is_superuser=True; user.is_staff=True; user.save()" | python manage.py shell --settings=config.settings.local
 
 echo "STARTING DJANGO BUILT-IN SERVER"
 # SSL Enabled Mode
-# python manage.py runserver_plus 0.0.0.0:8000 --cert-file /tmp/cert.crt
+# python manage.py runserver_plus 0.0.0.0:8000 --nopin --cert-file /tmp/cert.crt
 # SSL Disabled Mode
-python manage.py runserver_plus 0.0.0.0:8000
+python manage.py runserver_plus 0.0.0.0:8000 --nopin

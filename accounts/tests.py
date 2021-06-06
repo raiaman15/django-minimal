@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-from django.urls import reverse, resolve
+from django.urls import reverse
 
 
 class CustomUserTests(TestCase):
@@ -33,7 +33,6 @@ class CustomUserTests(TestCase):
 
 
 class SignupTests(TestCase):
-
     username = 'newuser'
     email = 'newuser@email.com'
 

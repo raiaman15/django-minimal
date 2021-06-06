@@ -1,9 +1,11 @@
+# Verify at http://yaml-online-parser.appspot.com/
 version: "3.8"
-   
+
 services:
 
   django:
-    container_name: django
+    restart: unless-stopped
+    container_name: django_minimal_web_local
     build:
       context: .
       dockerfile: ./compose/local/django/Dockerfile
@@ -11,20 +13,20 @@ services:
     volumes:
       - .:/app
     ports:
-      - 8000:8000
-      - 9001:9001
+      - "9001:25" # HOST:CONTAINER
+      - 80:8000 # HOST:CONTAINER
     env_file:
       - ./.envs/.local/.django
     depends_on:
       - postgres
 
   postgres:
-    container_name: postgres
+    container_name: django_minimal_db_local
     image: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     ports:
-      - 5432:5432
+      - 5432:5432 # HOST:CONTAINER
     env_file:
       - ./.envs/.local/.postgres
 volumes:

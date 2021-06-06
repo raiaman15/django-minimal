@@ -1,22 +1,24 @@
+# Verify at http://yaml-online-parser.appspot.com/
 version: "3.8"
-   
+
 services:
-  
+
   nginx:
-    container_name: nginx
-    build: 
+    container_name: django_minimal_nginx
+    build:
       context: .
       dockerfile: ./compose/production/nginx/Dockerfile
     volumes:
       - static_volume:/app/files-static
       - media_volume:/app/files-media
     ports:
-      - 80:80
+      - 80:80 # HOST:CONTAINER
     depends_on:
       - django_production
-  
+
   django_production:
-    container_name: django_production
+    restart: unless-stopped
+    container_name: django_minimal_web_production
     build:
       context: .
       dockerfile: ./compose/production/django/Dockerfile
@@ -25,17 +27,19 @@ services:
       - static_volume:/app/files-static
       - media_volume:/app/files-media
     expose:
-      - 8000
+      - "8000"
     env_file:
       - ./.envs/.production/.django
     depends_on:
       - postgres_production
-  
+
   postgres_production:
-    container_name: postgres_production
+    container_name: django_minimal_db_production
     image: postgres
     volumes:
       - postgres_production_data:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432 # HOST:CONTAINER
     env_file:
       - ./.envs/.production/.postgres
 

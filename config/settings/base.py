@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+
 from environs import Env
 
 env = Env()
@@ -81,7 +82,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
@@ -95,7 +95,6 @@ DATABASES = {
         "PORT": env("SQL_PORT", "5432"),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -114,7 +113,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -142,6 +140,9 @@ STATIC_ROOT = str(BASE_DIR.joinpath('files-static'))
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = str(BASE_DIR.joinpath('files-media'))
+
+# Set DEFAULT_AUTO_FIELD for complete project
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 # -----------------------------------------------------------
 # Project Specific Settings
@@ -174,6 +175,8 @@ ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 7
 SOCIALACCOUNT_AUTO_SIGNUP = False
 SOCIALACCOUNT_EMAIL_VERIFICATION = True
 SOCIALACCOUNT_EMAIL_REQUIRED = True
+
+
 # FIX-NORMAL: ACCOUNT_USER_DISPLAY (if needed)
 def ACCOUNT_USER_DISPLAY(user): return user.email
 
