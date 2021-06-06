@@ -45,7 +45,7 @@ volume.*
 - https://docs.docker.com/compose/django/
 - https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/
 
-*NOTE: This is a starter template for django (version 3.1.5)*
+*NOTE: This is a starter template for django (version 3.2.4 LTS)*
 *NOTE: You must update `compose/ssl_production/nginx/domain_ssl_cert.pem` file with the file generated for your domain.
 You can generate it from Cloudflare or any other provider.*
 *NOTE: You must update `compose/ssl_production/nginx/domain_ssl_private_key.key` file with the file generated for your
